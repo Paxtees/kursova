@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>сайт</title>
+    <link rel="stylesheet" href="../static/css/normalize.css">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="../static/img/Vector.png" type="image/x-icon">
+</head>
+<body>
+    <div class="rov">
+    <section class="main-begin">
+        <div class="btn-begin">
+            <img src="../static/img/baki.png" alt="боец баки">
+            <button class="lesgo">Начать</a>
+        </div>
+        <div class="text-begin">
+            <span id="text2"><p id="text"></p></span>
+            <script src="../static/js/typer.js"></script>
+        </div>
+    </section>
+      <div class="main">
+          <input type="checkbox" id="chk" aria-hidden="true">
+          <a href="#" class="close"><img src="{{ url_for('static', filename='img/Background (2).png') }}" alt="" height="30" width="30"></a>
+          <div class="signup">
+              <form method="POST" action="/signup">
+                  <label for="chk" aria-hidden="true">Регистрация</label>
+                  <input type="text" name="username" placeholder="Логин" required="" id="login" minlength="4" maxlength="20">
+                  <input type="password" name="password" id="pass" placeholder="Пароль" required="" minlength="5" maxlength="25">
+                  <button class="btn btn-success" type="submit">Зарегистрироваться</button>
+              </form>
+          </div>
+          <div class="login">
+              <form method="POST" action="/login">
+                  <label for="chk" aria-hidden="true">Авторизация</label>
+                  <input type="text" name="username" id="login" placeholder="Логин" required="">
+                  <input type="password" name="password" id="pass" placeholder="Пароль" required="">
+                  <button class="btn btn-success" type="submit">Войти</button>
+              </form>
+          </div>
+      </div>
+      <script src="../static/js/index.js"></script>
+</div>
+</body>
+</html>

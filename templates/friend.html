@@ -1,0 +1,15 @@
+<!-- templates/friends.html -->
+{% extends 'base.html' %}
+
+{% block title %}
+Друзья
+{% endblock %}
+
+{% block body %}
+    <h1>Друзья</h1>
+    <ul>
+        {% for friend in friends %}
+            <li>{{ friend.username }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

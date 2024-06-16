@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Ваши друзья
+{% endblock %}
+
+{% block body %}
+<main class="main-friend">
+    <section id="friends" class="friend">
+        <h2 class="friend-h">Список друзей</h2>
+        <div class="friend-list">
+            {% for user in users %}
+            <div class="friend-card">
+                <div class="friend-info">
+                    <div class="friend-rovn">
+                        {% if user['photo'] %}
+                            <img src="{{ url_for('static', filename=user['photo']) }}" alt="Profile Photo" class="friend-photo">
+                        {% else %}
+                            <img src="{{ url_for('static', filename='default_profile.png') }}" alt="Default Profile Photo" class="friend-photo">
+                        {% endif %}
+                        <a href="{{ url_for('view_profile', username=user['username']) }}" class="friend-name">{{ user['username'] }}</a>
+                    </div>
+                    <p class="friend-bio">{{ user['bio'] }}</p>
+                    <div class="friend-actions">
+                        <a href="{{ url_for('private_chat', username=user['username']) }}" class="btn message">Написать</a>
+                        <form action="{{ url_for('add_friend_route', friend_id=user['id']) }}" method="POST" class="friend-form">
+                            <input type="hidden" name="friend_id" value="{{ user['id'] }}">
+                            <button type="submit" class="btn add">Добавить в друзья</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+</main>
+{% endblock %}

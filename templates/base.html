@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="../static/css/normalize.css">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="../static/img/Vector.png" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <a href="/main">BINN</a>
+        <nav>
+            <ul>
+                <li><a href="/profile">Профиль</a></li>
+                <li><a href="/chat">Общий чат</a></li>
+            </ul>
+        </nav>
+    </header>
+    {% block body %}{% endblock %}
+    <footer>
+        <p>BINN</p>
+    </footer>
+</body>
+</html>

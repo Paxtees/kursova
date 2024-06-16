@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Профиль пользователя
+{% endblock %}
+
+{% block body %}
+<section class="rovn-container">
+    <h2>Профиль пользователя</h2>
+    <main class="profile-container">
+        <div class="profile-card">
+            <div class="profile-header">
+                {% if user['photo'] %}
+                    <img src="{{ url_for('static', filename=user['photo']) }}" alt="Profile Photo" class="profile-photo">
+                {% else %}
+                    <img src="{{ url_for('static', filename='default_profile.png') }}" alt="Default Profile Photo" class="profile-photo">
+                {% endif %}
+            </div>
+            <div class="profile-body">
+                <h1 class="profile-username">{{ user['username'] }}</h1>
+                <p class="profile-bio">{{ user['bio'] }}</p>
+                <p class="profile-age">Возраст: {{ user['age'] }}</p>
+                <p class="profile-city">Город: {{ user['city'] }}</p>
+                <a href="{{ url_for('private_chat', username=user['username']) }}" class="btn edit-btn">Написать сообщение</a>
+                
+                {% if current_user_id != user.id %}
+                    {% if not are_friends(current_user_id, user.id) %}
+                        {% if friend_request_sent(current_user_id, user.id) %}
+                            <button type="button" class="btn disabled">Запрос отправлен</button>
+                        {% else %}
+                        <form action="{{ url_for('add_friend', username=user['username']) }}" method="post">
+                            <button type="submit" class="btn add">Добавить в друзья</button>
+                        </form>
+                        {% endif %}
+                    {% else %}
+                        <form action="{{ url_for('remove_friend', friend_id=user.id) }}" method="POST">
+                            <input type="hidden" name="friend_id" value="{{ user.id }}">
+                            <button type="submit" class="btn remove">Удалить из друзей</button>
+                        </form>
+                    {% endif %}
+                {% endif %}
+                
+            </div>
+        </div>
+    </main>
+</section>
+{% endblock %}

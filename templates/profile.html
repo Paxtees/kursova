@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Профиль пользователя
+{% endblock %}
+
+{% block body %}
+<section class="rovn-container">
+    <h2>Ваш профиль</h2>
+    <main class="profile-container">
+        <div class="profile-card">
+            <div class="profile-header">
+                {% if user['photo'] %}
+                    <img src="{{ url_for('static', filename=user['photo']) }}" alt="Profile Photo" class="profile-photo">
+                {% else %}
+                    <img src="{{ url_for('static', filename='default_profile.png') }}" alt="Default Profile Photo" class="profile-photo">
+                {% endif %}
+            </div>
+            <div class="profile-body">
+                <h1 class="profile-username">{{ user['username'] }}</h1>
+                <p class="profile-bio">{{ user['bio'] }}</p>
+                <p class="profile-age">Возраст: {{ user['age'] }}</p>
+                <p class="profile-city">Город: {{ user['city'] }}</p>
+                <a href="{{ url_for('edit_profile') }}" class="btn edit-btn">ВЗЛОМАТЬ</a>
+                <a href="{{ url_for('my_profile') }}">Список друзей</a>
+            </div>
+        </div>
+    </main>
+</section>
+{% endblock %}

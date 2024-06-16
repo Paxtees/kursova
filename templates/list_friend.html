@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Список друзей
+{% endblock %}
+
+{% block body %}
+<main class="main-friend">
+    <section id="friends" class="friend">
+        <h2 class="friend-h">Список друзей</h2>
+        <div class="friend-list">
+            {% for friend in friends %}
+            <div class="friend-card">
+                <div class="friend-info">
+                    {% if friend['photo'] %}
+                        <img src="{{ url_for('static', filename=friend['photo']) }}" alt="Profile Photo" class="friend-photo">
+                    {% else %}
+                        <img src="{{ url_for('static', filename='default_profile.png') }}" alt="Default Profile Photo" class="friend-photo">
+                    {% endif %}
+                    <a href="{{ url_for('view_profile', username=friend['username']) }}" class="friend-name">{{ friend['username'] }}</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+</main>
+{% endblock %}

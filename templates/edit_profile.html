@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Редактировать профиль
+{% endblock %}
+
+{% block body %}
+<section class="rovn-container-edit">
+<main class="edit-profile-container">
+    <div class="edit-profile-card">
+        <h1>Редактировать профиль</h1>
+        <form method="POST" action="/edit" enctype="multipart/form-data">
+            <textarea name="bio" class="bio-textarea" placeholder="Описание" maxlength="52">{{ bio }}</textarea>
+            <input type="number" name="age" class="input-field" placeholder="Возраст" value="{{ age }}" oninput="validateAge(this)">
+            <input type="text" name="city" class="input-field" placeholder="Город проживания" value="{{ city }}" maxlength="10">
+            <input type="file" name="photo" class="input-field">
+            <button type="submit" class="btn save-btn">Сохранить</button>
+        </form>
+    </div>
+</main>
+</section>
+<script>
+    function validateAge(input) {
+        if (input.value.length > 3) {
+            input.value = input.value.slice(0, 3);
+        }
+    }
+    </script>
+{% endblock %}

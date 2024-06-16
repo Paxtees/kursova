@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Чат с {{ receiver }}
+{% endblock %}
+
+{% block body %}
+<div class="body-chat">
+<div class="chat-container">
+    <div class="messages-private">
+        {% for message in messages %}
+            <div class="message {% if message['sender_username'] == session['username'] %}sent{% else %}received{% endif %}">
+                <strong>{{ message['sender_username'] }}:</strong> {{ message['message'] }}
+            </div>
+        {% endfor %}
+    </div>
+    <form method="POST" action="{{ url_for('private_chat', username=receiver) }}">
+        <textarea name="message" maxlength="100"></textarea>
+        <button type="submit">Отправить</button>
+    </form>
+</div>
+</div>
+{% endblock %}
