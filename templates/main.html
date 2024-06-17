@@ -24,13 +24,25 @@
         </nav>
     </header>
     <main class="main-main">
-        <section class="news">
+        <section class="profile-news">
             <img src="../static/img/Vector.png" alt="">
             <h2>Приветствуем!<br> {{ session['username'] }}!</h2>
             <a href="/profile">Перейти в профиль</a>
         </section>
         <section id="post" class="news">
             <h2>Новости</h2>
+            <form action="{{ url_for('add_news') }}" method="post">
+                <textarea name="content" maxlength="400" placeholder="Введите вашу новость (до 400 символов)"></textarea>
+                <button type="submit">Добавить новость</button>
+            </form>
+            <div class="news-feed">
+                {% for news in news_feed %}
+                    <div class="news-item">
+                        <p>{{ news['content'] }}</p>
+                        <small>Автор: {{ news['username'] }} | Дата: {{ news['created_at'] }}</small>
+                    </div>
+                {% endfor %}
+            </div>
         </section>
     </main>
     <footer>

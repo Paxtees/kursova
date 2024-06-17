@@ -342,7 +342,9 @@ body {
       }
   }
   
-  .main-main {
+
+
+  .main-main  {
       flex: 1;
       padding: 0;
       margin: 0;
@@ -354,37 +356,60 @@ body {
       font-weight: 300;
       font-style: normal;
       text-decoration: none;
+      form {
+        display: flex;
+        flex-direction: column;
+  
+        textarea {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-right: 10px;
+            resize: none;
+        }
+  
+        button {
+            padding: 10px 20px;
+            background-color: #8a2be2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            height: 52px;
+            width: 110px;
+            font-size: 13px;
+            font-family: "Jura", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 300;
+            font-style: normal;
+            text-decoration: none;
+          &:hover {
+            background-color: lighten($secondary-color, 10%);
+          }
+        }
+      }
         img {
             height: 100px;
             width: 100px;
         }
+
     }
-      #post {
-        width: 700px;
-        height: 700px;
-        margin-right: 500px;
-      }
-      .news {
-          background: $card-background-color;
-          padding: 30px;
-          margin-bottom: 30px;
-          border: 1px solid $border-color;
-          border-radius: $border-radius;
-          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  
-          h2 {
-              font-size: 2em;
-              border-bottom: 2px solid $primary-color;
-              padding-bottom: 10px;
-              margin-bottom: 20px;
-          }
-  
-          p {
-              font-size: 1.2em;
-              line-height: 1.6;
-              color: $muted-text-color;
-          }
-          a {
+
+    .profile-news {
+        background: $card-background-color;
+        padding: 30px;
+        margin-bottom: 30px;
+        border: 1px solid $border-color;
+        border-radius: $border-radius;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        overflow-wrap: break-word;
+        flex-direction: column-reverse;
+        h2 {
+            font-size: 30px;
+        }
+        a {
             display: inline-block;
             margin-top: 20px;
             padding: 10px 20px;
@@ -395,19 +420,84 @@ body {
             border-radius: 5px;
             cursor: pointer;
             text-decoration: none;
+      
+            &:hover {
+              background-color: lighten($secondary-color, 10%);
+            }
           }
+    }
+    #post {
+        width: 700px;
+        height: 700px;
+        margin-right: 500px;
+        overflow-y: auto; // добавлено для создания полосы прокрутки по вертикали
+        max-height: 800px; // задайте максимальную высоту, чтобы появилась полоса прокрутки при необходимости
+        background: $card-background-color;
+        padding: 30px;
+        margin-bottom: 30px;
+        border: 1px solid $border-color;
+        border-radius: $border-radius;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        overflow-wrap: break-word;
+        flex-direction: column-reverse;
+        .news {
+          background: $card-background;
+          padding: 30px;
+          margin-bottom: 30px;
+          border: 1px solid $border-color;
+          border-radius: 15px;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+          overflow-wrap: break-word;
+          flex-direction: column-reverse;
+
+      
+          p {
+            font-size: 35px;
+            line-height: 1.6;
+            color: $muted-text-color;
+          }
+      
+      
+          .news-feed {
+            margin-top: 20px;
+      
+            .news-item {
+              background-color: $primary-color;
+              padding: 10px;
+              border-radius: 5px;
+              margin-bottom: 10px;
+              overflow-wrap: break-word;
+            }
+          }
+        }
       }
 
-  footer {
-      background-color: $primary-color;
-      color: white;
-      text-align: center;
-      padding: 15px 0;
-      width: 100%;
-      position: fixed;
-      bottom: 0;
-      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
-  }
+      small {
+        color: white;
+        font-size: 10px;
+      }
+      p {
+        margin: 0 0 5px 0;
+        font-size: 25px; // основной текст 25px
+      }
+      h2 {
+        font-size: 35px;
+        border-bottom: 2px solid $primary-color;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+      }
+      
+      footer {
+        background-color: $primary-color;
+        color: white;
+        text-align: center;
+        padding: 15px 0;
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+      }
+      
   
 
   $primary-color: #4b0082; 
@@ -420,11 +510,11 @@ $border-color: #3a3a4f;
 $header-height: 60px;
 $border-radius: 12px; 
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+// * {
+//     margin: 0;
+//     padding: 0;
+//     box-sizing: border-box;
+// }
 
 
     .logo {

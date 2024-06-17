@@ -21,6 +21,7 @@ def create_table():
     cursor.execute('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, username TEXT, password TEXT, is_banned INTEGER DEFAULT 0, is_admin INTEGER DEFAULT 0, bio TEXT, age INTEGER, city TEXT, photo TEXT)')
     cursor.execute('CREATE TABLE IF NOT EXISTS messages (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, message TEXT, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)')
     cursor.execute('CREATE TABLE IF NOT EXISTS friends (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER, friend_id INTEGER, UNIQUE(user_id, friend_id), FOREIGN KEY(user_id) REFERENCES users(id), FOREIGN KEY(friend_id) REFERENCES users(id))')
+    cursor.execute('CREATE TABLE IF NOT EXISTS news (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL, content TEXT NOT NULL, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (user_id) REFERENCES users(id))')
     conn.commit()
     conn.close()
 
@@ -97,19 +98,51 @@ def login():
 
 @app.route('/main')
 def main():
-    if 'username' not in session:
+    if 'user_id' not in session:
         return redirect(url_for('login'))
     
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute('SELECT * FROM users WHERE username = ?', (session['username'],))
-    user = cursor.fetchone()
+    cursor.execute('''
+        SELECT news.content, news.created_at, users.username 
+        FROM news 
+        JOIN users ON news.user_id = users.id 
+        ORDER BY news.created_at DESC
+    ''')
+    news_feed = cursor.fetchall()
     conn.close()
+    
+    return render_template('main.html', news_feed=news_feed)
 
-    if user['is_banned'] == 1:
-        return render_template('banned.html')
 
-    return render_template('main.html', user=user)
+
+@app.route('/add_news', methods=['POST'])
+def add_news():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    
+    user_id = session['user_id']
+    content = request.form['content']
+    
+    if not content:
+        flash('Новость не может быть пустой', 'error')
+        return redirect(url_for('main'))
+    
+    if len(content) > 400:
+        flash('Новость не может быть длиннее 400 символов', 'error')
+        return redirect(url_for('main'))
+    
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('INSERT INTO news (user_id, content) VALUES (?, ?)', (user_id, content))
+    conn.commit()
+    conn.close()
+    
+    flash('Новость успешно добавлена', 'success')
+    return redirect(url_for('main'))
+
+
+
 
 
 # Редактирование профиля
